@@ -1,6 +1,6 @@
 {
   "name": "fiojs",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "description": "File input-output api",
   "main": "dist/index.js",
   "scripts": {
