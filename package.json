@@ -39,5 +39,8 @@
     "eslint": "^4.6.1",
     "eslint-loader": "^1.9.0",
     "webpack": "^1.14.0"
+  },
+  "dependencies": {
+    "promise": "^8.0.1"
   }
 }
