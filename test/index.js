@@ -111,6 +111,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	/**
+	 * Creates Promise to read file
+	 * @params {string|number} [path = 0] - path to file or file's descriptor to be read.
+	 * @param {string} [encoding] - file's encoding, if encoding is not presented the
+	 *                              reading result is a buffer of bytes.
+	 * @return {Promise}
+	 */
 	exports.default = function () {
 	  var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 	  var encoding = arguments[1];
@@ -958,6 +965,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	/**
+	 * Creates a Promise to write in a file. If file exists it will be rewrited.
+	 * @params {string|number} [path=0] - path to file or file's descriptor to be written.
+	 * @params {string|Buffer} data - writing data.
+	 * @param {string} [encoding] - file's encoding, if encoding is not presented the
+	 *                              writing result is a buffer of bytes.
+	 * @return {Promise}
+	 */
 	exports.default = function () {
 	  var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 	  var data = arguments[1];
