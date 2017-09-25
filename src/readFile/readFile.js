@@ -2,7 +2,7 @@ import { readFile } from 'fs';
 import Promise from 'promise';
 
 /**
- * Creates Promise to read file
+ * Creates a Promise to read file.
  * @params {string|number} [path = 0] - path to file or file's descriptor to be read.
  * @param {string} [encoding] - file's encoding, if encoding is not presented the
  *                              reading result is a buffer of bytes.
