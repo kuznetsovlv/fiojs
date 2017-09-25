@@ -1,0 +1,24 @@
+{
+  "name": "fiojs",
+  "version": "0.0.0",
+  "description": "File input-output api",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kuznetsovlv/fiojs.git"
+  },
+  "keywords": [
+    "file",
+    "input",
+    "output"
+  ],
+  "author": "Kuznetsov Leonid (kuznetsovlv1981@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kuznetsovlv/fiojs/issues"
+  },
+  "homepage": "https://github.com/kuznetsovlv/fiojs#readme"
+}
