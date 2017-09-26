@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("fs"), require("domain"));
+		module.exports = factory(require("fs"), require("domain"), require("path"));
 	else if(typeof define === 'function' && define.amd)
-		define(["fs", "domain"], factory);
+		define(["fs", "domain", "path"], factory);
 	else if(typeof exports === 'object')
-		exports["fiojs"] = factory(require("fs"), require("domain"));
+		exports["fiojs"] = factory(require("fs"), require("domain"), require("path"));
 	else
-		root["fiojs"] = factory(root["fs"], root["domain"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_8__) {
+		root["fiojs"] = factory(root["fs"], root["domain"], root["path"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_8__, __WEBPACK_EXTERNAL_MODULE_19__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -59,7 +59,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.writeFile = exports.readFile = undefined;
+	exports.getFileInfo = exports.writeFile = exports.readFile = undefined;
 
 	var _readFile = __webpack_require__(1);
 
@@ -69,10 +69,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _writeFile2 = _interopRequireDefault(_writeFile);
 
+	var _getFileInfo = __webpack_require__(17);
+
+	var _getFileInfo2 = _interopRequireDefault(_getFileInfo);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.readFile = _readFile2.default;
 	exports.writeFile = _writeFile2.default;
+	exports.getFileInfo = _getFileInfo2.default;
 
 /***/ }),
 /* 1 */
@@ -987,6 +992,151 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	  });
 	};
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = undefined;
+
+	var _getFileInfo = __webpack_require__(18);
+
+	var _getFileInfo2 = _interopRequireDefault(_getFileInfo);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _getFileInfo2.default;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _fs = __webpack_require__(3);
+
+	var _path = __webpack_require__(19);
+
+	var _promise = __webpack_require__(4);
+
+	var _promise2 = _interopRequireDefault(_promise);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var getFileType = function getFileType(stats) {
+	  if (stats.isDirectory()) {
+	    return 'directory';
+	  }
+
+	  if (stats.isBlockDevice()) {
+	    return 'block device';
+	  }
+
+	  if (stats.isCharacterDevice()) {
+	    return 'character device';
+	  }
+
+	  if (stats.isSymbolicLink()) {
+	    return 'symbol link';
+	  }
+
+	  if (stats.isFIFO()) {
+	    return 'fifo';
+	  }
+
+	  if (stats.isSocket()) {
+	    return 'socket';
+	  }
+
+	  if (stats.isFile()) {
+	    return 'regular file';
+	  }
+
+	  return null;
+	};
+
+	exports.default = function (path) {
+	  return new _promise2.default(function (resolve, reject) {
+	    var parsed = (0, _path.parse)(path);
+	    var ext = parsed.ext;
+
+	    var mime = ext.replace('.', '');
+	    var normalized = (0, _path.normalize)(path);
+	    var normalizedArr = normalized.split(_path.sep);
+
+	    (0, _fs.lstat)(normalized, function (err, stats) {
+	      if (err) {
+	        var code = err.code;
+
+
+	        if (code === 'ENOENT') {
+	          resolve(_extends({}, parsed, {
+	            exists: false,
+	            path: path,
+	            normalized: normalized,
+	            normalizedArr: normalizedArr,
+	            mime: mime
+	          }));
+	        } else {
+	          reject(err);
+	        }
+	      } else {
+	        var fileType = getFileType(stats) || '';
+	        var exists = !!fileType;
+
+	        resolve(_extends({}, parsed, stats, {
+	          path: path,
+	          normalized: normalized,
+	          normalizedArr: normalizedArr,
+	          exists: exists,
+	          fileType: fileType,
+	          mime: mime
+	        }));
+	      }
+	    });
+	  }).then(function (data) {
+	    return new _promise2.default(function (resolve, reject) {
+	      (0, _fs.realpath)(path, function (err, absolute) {
+	        if (err) {
+	          var code = err.code;
+
+
+	          if (code === 'ENOENT') {
+	            resolve(_extends({}, data, { exists: false }));
+	          } else {
+	            reject(err);
+	          }
+	        } else {
+	          var absoluteArr = absolute.split(_path.sep);
+	          var relativePath = (0, _path.relative)(process.cwd(), absolute);
+
+	          resolve(_extends({}, data, {
+	            relative: relativePath,
+	            absolute: absolute,
+	            absoluteArr: absoluteArr
+	          }));
+	        }
+	      });
+	    });
+	  });
+	};
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+	module.exports = require("path");
 
 /***/ })
 /******/ ])

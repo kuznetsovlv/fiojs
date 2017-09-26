@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { readFile, writeFile } from './index';
+import { readFile, writeFile, getFileInfo } from './index';
 
 const args = process.argv;
 console.log(args);
@@ -42,3 +42,12 @@ if (!output) {
     })
     .catch(error => console.log(error));
 }
+
+
+getFileInfo(input).then((data) => {
+  console.log(`Got info about ${input}:`);
+  console.log(data);
+}, error => {
+  console.log(`Error of getting info about ${input}:`);
+  console.log(typeof error);
+});
