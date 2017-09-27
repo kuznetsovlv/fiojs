@@ -81,6 +81,7 @@ The `fulfilled` gets argument whit cumulative info about file.
 ```
 
 The result is:
+
 _Got info about package.json:_
 ```javascript
 { root: '',
