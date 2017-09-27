@@ -121,7 +121,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @params {string|number} [path = 0] - path to file or file's descriptor to be read.
 	 * @param {string} [encoding] - file's encoding, if encoding is not presented the
 	 *                              reading result is a buffer of bytes.
-	 * @return {Promise}
+	 * @return {Promise} - reading file promise which fulfilled gets argument with file's data
 	 */
 	exports.default = function () {
 	  var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
@@ -976,7 +976,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @params {string|Buffer} data - writing data.
 	 * @param {string} [encoding] - file's encoding, if encoding is not presented the
 	 *                              writing result is a buffer of bytes.
-	 * @return {Promise}
+	 * @return {Promise} - promise writing into the file, fulfilled has no arguments
 	 */
 	exports.default = function () {
 	  var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
@@ -1034,6 +1034,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	/**
+	 * Returns file's type
+	 * @param {Stats} stats - describing file stats.
+	 * @return {string} - file type
+	 */
 	var getFileType = function getFileType(stats) {
 	  if (stats.isDirectory()) {
 	    return 'directory';
@@ -1065,6 +1070,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return null;
 	};
+
+	/**
+	 * Creates promise to combine info about file
+	 * @param {string} - path to file.
+	 * @return {Object} - cumulative info about file.
+	 */
 
 	exports.default = function (path) {
 	  return new _promise2.default(function (resolve, reject) {

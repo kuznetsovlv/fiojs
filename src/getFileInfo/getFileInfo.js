@@ -2,6 +2,11 @@ import { lstat, realpath } from 'fs';
 import { sep, parse, normalize, relative } from 'path';
 import Promise from 'promise';
 
+/**
+ * Returns file's type
+ * @param {Stats} stats - describing file stats.
+ * @return {string} - file type
+ */
 const getFileType = (stats) => {
   if (stats.isDirectory()) {
     return 'directory';
@@ -34,6 +39,11 @@ const getFileType = (stats) => {
   return null;
 };
 
+/**
+ * Creates promise to combine info about file
+ * @param {string} - path to file.
+ * @return {Object} - cumulative info about file.
+ */
 export default path => new Promise ((resolve, reject) => {
   const parsed = parse(path);
   const { ext } = parsed;

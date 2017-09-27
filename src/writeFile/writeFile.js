@@ -7,7 +7,7 @@ import Promise from 'promise';
  * @params {string|Buffer} data - writing data.
  * @param {string} [encoding] - file's encoding, if encoding is not presented the
  *                              writing result is a buffer of bytes.
- * @return {Promise}
+ * @return {Promise} - promise writing into the file, fulfilled has no arguments
  */
 export default (path = 1, data, encoding) => new Promise((resolve, reject) => {
   writeFile(path, data, encoding, (err) => {
